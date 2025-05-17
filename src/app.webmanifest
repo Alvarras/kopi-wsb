@@ -8,39 +8,40 @@
     "theme_color": "#5d4037",
     "icons": [
         {
-            "src": "/public/assets/icon.png",
+            "src": "/assets/icon.png",
             "type": "image/png",
-            "sizes": "198x64",
+            "sizes": "1351x418",
             "purpose": "any"
         },
         {
-            "src": "/public/assets/arabica.jpg",
+            "src": "/assets/arabica.jpg",
             "sizes": "1200x900",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/public/assets/honey.jpg",
+            "src": "/assets/honey.jpg",
             "sizes": "336x150",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/public/assets/kebun-kopi.jpg",
+            "src": "/assets/kebun-kopi.jpg",
             "sizes": "1023x682",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/public/assets/robusta.jpg",
+            "src": "/assets/robusta.jpg",
             "sizes": "2880x1660",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/public/assets/kopi-192x192.jpg",
-            "sizes": "192x192",
-            "type": "image/png"
+            "src": "/assets/coffee512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
         }
     ],
     "shortcuts": [
@@ -51,7 +52,7 @@
             "url": "/#add-story",
             "icons": [
                 {
-                    "src": "/public/assets/add-story.jpg",
+                    "src": "/assets/add-story.jpg",
                     "sizes": "96x96"
                 }
             ]
@@ -59,13 +60,13 @@
     ],
     "screenshots": [
         {
-            "src": "/public/assets/ss.png",
+            "src": "/assets/ss.png",
             "sizes": "1353x649",
             "type": "image/jpeg",
             "form_factor": "narrow"
         },
         {
-            "src": "/public/assets/ss.png",
+            "src": "/assets/ss.png",
             "sizes": "1353x649",
             "type": "image/jpeg",
             "form_factor": "wide"
