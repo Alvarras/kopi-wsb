@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kopi Slukatan Wonosobo - Nikmati kopi terbaik dari pegunungan Wonosobo">
+  <meta name="theme-color" content="#5d4037">
+  <title>Kopi Slukatan Wonosobo</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <link rel="manifest" href="app.webmanifest" />
+</head>
+<body>
+  
+<a href="#main-content" class="skip-link" tabindex="0">Lewati ke konten utama</a>
+  
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <h1>Kopi Slukatan</h1>
+          <p>Wonosobo</p>
+        </div>
+        <nav class="nav">
+          <button id="menu-toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <ul id="nav-list">
+            <li><a href="#home" class="nav-link">Beranda</a></li>
+            <li><a href="#stories" class="nav-link">Cerita Kopi</a></li>
+            <li><a href="#add-story" class="nav-link">Tambah Cerita</a></li>
+            <li><a href="#about" class="nav-link">Tentang Kami</a></li>
+            <li><a href="#favorites" class="nav-link">Favorit</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div id="page-container">
+      
+      <div id="home" class="page active">
+        <section class="hero">
+          <div class="container">
+            <div class="hero-content">
+              <h2>Nikmati Kopi Terbaik dari Pegunungan Wonosobo</h2>
+              <p>Kopi Slukatan dipetik dan diolah dengan penuh cinta dari ketinggian 1.500 mdpl</p>
+              <a href="#stories" class="btn btn-primary">Lihat Cerita Kopi</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="featured">
+          <div class="container">
+            <h2 class="section-title">Produk Unggulan</h2>
+            <div class="featured-items">
+              <div class="featured-item">
+                
+                <img src="public/assets/arabica.jpg" alt="Kopi Arabica Slukatan" class="featured-img">
+                <h3>Arabica Slukatan</h3>
+                <p>Kopi dengan cita rasa fruity dan aroma yang khas</p>
+              </div>
+              <div class="featured-item">
+                
+                <img src="public/assets/robusta.jpg" alt="Kopi Robusta Slukatan" class="featured-img">
+                <h3>Robusta Slukatan</h3>
+                <p>Kopi dengan body yang kuat dan rasa coklat yang khas</p>
+              </div>
+              <div class="featured-item">
+                
+                <img src="public/assets/honey.jpg" alt="Kopi Honey Process" class="featured-img">
+                <h3>Honey Process</h3>
+                <p>Kopi dengan proses honey yang menghasilkan rasa manis alami</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="stories" class="page">
+        <div class="container">
+          <h2 class="section-title">Cerita Kopi Slukatan</h2>
+          <div class="stories-filter">
+            <button id="view-list" class="btn btn-small active" aria-label="Tampilan daftar">
+              <i class="icon-list"></i> Daftar
+            </button>
+            <button id="view-map" class="btn btn-small" aria-label="Tampilan peta">
+              <i class="icon-map"></i> Peta
+            </button>
+          </div>
+          
+          <div id="stories-list" class="stories-container">
+            <!-- Stories will be loaded here via JavaScript -->
+            <div class="loading-indicator">Memuat cerita...</div>
+          </div>
+          
+          <div id="stories-map" class="map-container" style="display: none;">
+            <div id="map"></div>
+            <div class="map-layers">
+              <button id="map-standard" class="btn btn-small active">Standar</button>
+              <button id="map-satellite" class="btn btn-small">Satelit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="add-story" class="page">
+        <div class="container">
+          <h2 class="section-title">Bagikan Cerita Kopimu</h2>
+          <form id="story-form" class="story-form">
+            <div class="form-group">
+              <label for="story-description">Ceritakan pengalamanmu dengan Kopi Slukatan:</label>
+              <textarea id="story-description" name="description" rows="4" required></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="story-photo">Foto:</label>
+              <div class="photo-capture">
+                <button type="button" id="camera-button" class="btn">
+                  <i class="icon-camera"></i> Ambil Foto
+                </button>
+                <div id="camera-container" style="display: none;">
+                  <video id="camera-preview" autoplay playsinline></video>
+                  <button type="button" id="capture-button" class="btn btn-primary">
+                    <i class="icon-capture"></i> Ambil
+                  </button>
+                  <button type="button" id="cancel-camera" class="btn btn-secondary">
+                    <i class="icon-close"></i> Batal
+                  </button>
+                </div>
+                <canvas id="photo-canvas" style="display: none;"></canvas>
+                <div id="photo-preview" class="photo-preview">
+                  <p>Belum ada foto</p>
+                </div>
+                <input type="file" id="story-photo" name="photo" accept="image/*" style="display: none;">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="story-location">Lokasi:</label>
+              <div id="location-map" class="location-map"></div>
+              <p id="selected-location">Belum ada lokasi dipilih. Klik pada peta untuk memilih lokasi.</p>
+              <input type="hidden" id="story-lat" name="lat">
+              <input type="hidden" id="story-lon" name="lon">
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" id="submit-story" class="btn btn-primary">Bagikan Cerita</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="about" class="page">
+        <div class="container">
+          <h2 class="section-title">Tentang Kopi Slukatan</h2>
+          <div class="about-content">
+            <div class="about-image">
+              
+              <img src="public/assets/kebun-kopi.jpg" alt="Kebun Kopi Slukatan di Wonosobo" class="about-img">
+            </div>
+            <div class="about-text">
+              <p>Kopi Slukatan adalah kopi spesial yang ditanam di lereng Gunung Sindoro, Wonosobo, Jawa Tengah. Dengan ketinggian 1.500 meter di atas permukaan laut, kopi ini memiliki karakteristik yang unik dan khas.</p>
+              <p>Petani kopi di Slukatan telah menanam dan mengolah kopi secara turun-temurun dengan metode tradisional yang dipadukan dengan teknologi modern untuk menghasilkan kopi berkualitas tinggi.</p>
+              <p>Kami berkomitmen untuk mendukung pertanian berkelanjutan dan pemberdayaan petani lokal melalui praktik perdagangan yang adil.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      <div id="favorites" class="page">
+        <div class="container">
+          <h2 class="section-title">Cerita Favorit Saya</h2>
+          <div id="favorites-list" class="stories-container">
+            <div class="loading-indicator">Memuat cerita favorit...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <h3>Kopi Slukatan Wonosobo</h3>
+          <p>Desa Slukatan, Kecamatan Mojotengah</p>
+          <p>Wonosobo, Jawa Tengah</p>
+        </div>
+        <div class="footer-links">
+          <h4>Tautan</h4>
+          <ul>
+            <li><a href="#home">Beranda</a></li>
+            <li><a href="#stories">Cerita Kopi</a></li>
+            <li><a href="#add-story">Tambah Cerita</a></li>
+            <li><a href="#about">Tentang Kami</a></li>
+            <li><a href="#favorites">Favorit</a></li>
+          </ul>
+        </div>
+        <div class="footer-social">
+          <h4>Ikuti Kami</h4>
+          <div class="social-icons">
+            <a href="#" aria-label="Instagram"><i class="icon-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="icon-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="icon-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <p>&copy; 2024 Kopi Slukatan Wonosobo. Hak Cipta Dilindungi.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="notification" class="notification" aria-live="polite"></div>
+
+  <!-- Templates -->
+  <template id="story-item-template">
+    <div class="story-item">
+      <div class="story-header">
+        <div class="story-author">
+          <span class="author-name"></span>
+        </div>
+        <div class="story-date"></div>
+      </div>
+      <div class="story-image">
+        <img src="/placeholder.svg" alt="" class="story-img">
+      </div>
+      <div class="story-content">
+        <p class="story-description"></p>
+        <div class="story-location">
+          <i class="icon-location"></i>
+          <span class="location-text"></span>
+        </div>
+        
+        <div class="story-actions">
+          <button class="btn-favorite" aria-label="Favorit">
+            <i class="icon-heart"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="login-modal-template">
+    <div class="modal" id="login-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Masuk</h3>
+          <button class="close-modal" aria-label="Tutup">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="login-form">
+            <div class="form-group">
+              <label for="login-email">Email:</label>
+              <input type="email" id="login-email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password:</label>
+              <input type="password" id="login-password" name="password" required>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Masuk</button>
+            </div>
+          </form>
+          <p class="modal-footer-text">Belum punya akun? <a href="#" id="show-register">Daftar</a></p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="register-modal-template">
+    <div class="modal" id="register-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Daftar</h3>
+          <button class="close-modal" aria-label="Tutup">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="register-form">
+            <div class="form-group">
+              <label for="register-name">Nama:</label>
+              <input type="text" id="register-name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email:</label>
+              <input type="email" id="register-email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="register-password">Password:</label>
+              <input type="password" id="register-password" name="password" minlength="8" required>
+              <p class="form-hint">Password minimal 8 karakter</p>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Daftar</button>
+            </div>
+          </form>
+          <p class="modal-footer-text">Sudah punya akun? <a href="#" id="show-login">Masuk</a></p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <noscript>
+    <div class="noscript-message">
+      <div class="container">
+        <h2>JavaScript Dinonaktifkan</h2>
+        <p>Aplikasi ini membutuhkan JavaScript untuk berfungsi dengan baik. Silakan aktifkan JavaScript di browser Anda.</p>
+      </div>
+    </div>
+  </noscript>
+  
+  <script type="module" src="./scripts/app.js"></script>
+</body>
+</html>
